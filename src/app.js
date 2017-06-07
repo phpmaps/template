@@ -3,7 +3,10 @@
 // simple express server
 var express = require('express');
 var app = express();
-var router = express.Router();
+var bodyParser = require('body-parser');
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.use(express.static('public')); // Make the public folder your web root, for hosting files.
 
