@@ -14,11 +14,15 @@ app.get('/', function(req, res) { // Express will serve out the index.html file 
 app.post('/weather', function(req, res) {  // This is the weather handler.  It recieves POSTs @ http://localhost:3000/weather.
     var fooParam = req.body.fooParam;
     var barParam = req.body.barParam;
-    log.readConfig().then((configuration)=>{ // Inside the weather handler, do something async...
-        var config = JSON.parse(configuration);
-        res.setHeader('Content-Type', 'application/json');
-        var message = JSON.stringify({"success":true, "msg": "Guest time to live (TTL) in sandbox changed.", "subscriptionTtl":expiration});
-        res.send(message); 
+    var prom = new Promise();
+    prom.then((configuration)=>{ // Inside the weather handler, do something async...
+        configuration = "Yo";
+        if(configuration){
+            var config = JSON.parse(configuration);
+            res.setHeader('Content-Type', 'application/json');
+            var message = JSON.stringify({"success":true, "msg": "Weather API message.", "result":config});
+            res.send(message); 
+        }
     });
 });
 
